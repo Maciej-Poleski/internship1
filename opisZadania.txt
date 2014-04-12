@@ -1,0 +1,38 @@
+Zaimplementuj program, którego zadaniem bedzie pobranie dwóch plików CSV oraz z³¹czenie ich po kolumnie zadanej parameterm "joinKey" (analogicznie jak to robi operacja JOIN w zapytaniach SQL). Dodatkowo u¿ytkownik moze wyspecyfikowaæ rodzaj z³¹czenia (inner (default), left, right). Wyniki z³¹czenia powinny trafiæ na standardowe wyjœcie.
+
+Sk³adnia wywo³ania programu:  java -jar join-1.0-SNAPSHOT.jar <file1> <file2> <joinKey> [<joinType>]
+Np.:
+* java -jar target/join-1.0-SNAPSHOT.jar in1.csv in2.csv id left
+* java -jar target/join-1.0-SNAPSHOT.jar in1.csv in2.csv id
+
+W katalogu "join" znajduje siê skonfigurowany projekt mavenowy, w którym znajduje siê szkielet aplikacji. Klasa g³ówna to Join.java - nale¿y zaimplementowaæ metodê main - parsowanie argumentów oraz wywo³anie metody joinuj¹cej.
+
+W katalogu src/test/resources/test1 znajduj¹ siê przyk³adowe dane wejœciowe i referencyjne
+* in1.csv, in2.csv - wejœciowe
+* out_inner.csv, out_left.csv, out_right.csv - referencyjne
+
+Za³o¿enia:
+* Format danych wejœciowych to standardowe CSV (szczegó³owy opis: http://tools.ietf.org/html/rfc4180). Tip: Warto rozwa¿yæ u¿ycie biblioteki u³atwiaj¹cej parsowanie takich plików - SuperCSV, OpenCSV, jCSV).
+* Poprawny plik sk³ada siê z wiersza nag³ówkowego (zawieraj¹cego listê kolumn) oraz z 1 lub wiêcej wierszy zawieraj¹cych dane.
+* Wiersze danych w plikach CSV mog¹ wystêpowaæ w dowolnej kolejnoœci.
+* Maksymalna wielkoœæ pliku CSV = 8 GB.
+* Jeœli argumenty wywo³ania programu lub dane wejœciowe s¹ niepoprawne, program powinien zg³osiæ u¿ytkownikowi odpowiedni b³¹d.
+
+Do realizacji zadania koniecznie jest skonfigurowanie mavena (http://maven.apache.org/download.cgi)
+
+Przydatne polecenia:
+* mvn eclipse:eclipse -DdownloadSources // skonfigurowanie projektu eclipse'owego
+* mvn test // skompilowanie kodu i uruchomienie testów
+* mvn package -DskipTests // buduje plik jar, pomijaj¹c wykonianie testów
+* mvn cobertura:cobertura && firefox target/site/cobertura/index.html - liczy stopieñ pokrycia kodu unit testami, po czym wyœwietla wyniki
+* mvn clean // wyczyszczenie projektu z plików binarnych, powinno byæ uruchomione przed wys³aniem zadania
+* mvn eclipse:clean // wyczyszczenie projektu z plików Eclipse, powinno byæ uruchomione przed wys³aniem zadania, jeœli u¿ywa³eœ/u¿ywa³aœ Eclipse'a
+
+Przy ocenianiu bêd¹ uwzglenione nastepujace elementy:
+* 50% - poprawnoœæ dzia³ania
+* 30% - unit testy
+* 20% - elegancja kodu (design, poprawna obs³uga IO, zastosowanie siê do zasad: Single Responsibility Principle, KISS, DRY)
+
+Jako odpowiedŸ oczekujemy plik praktyki2014_Nazwisko_Imie.zip zawieraj¹cy:
+* Kod Ÿród³owy rozwi¹zanego zadania.
+* Krótka dokumentacja w jêzyku angielskim (max 1 strona A4) opisuj¹ca implementacje oraz testy.
