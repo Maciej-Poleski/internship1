@@ -2,6 +2,7 @@
 #include <random>
 #include <functional>
 #include <string>
+#include <ctime>
 
 // Generates big table with small id pool.
 
@@ -13,7 +14,7 @@ int main(int argc,char**argv)
         std::cout<<argv[0]<<" [number of rows]\n";
         return 1;
     }
-    std::mt19937 engine(404);
+    std::mt19937 engine(time(nullptr));
     std::uniform_int_distribution<char> charDistribution('a','z');
     auto generateChar=std::bind(charDistribution,engine);
     std::cout<<"id,col1,col2\n";
