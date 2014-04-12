@@ -7,7 +7,7 @@ import java.io.OutputStreamWriter;
  * All join implementations share this base class and functionality.
  */
 abstract class JoinBase {
-    static final long MAX_SIZE_HINT = 64 * 1024 * 1024;
+    static final long MAX_SIZE_HINT = 16 * 1024 * 1024;
 
     protected static RecordGenerator getRecordGenerator(final int rightKey) {
         return new RecordGenerator() {
