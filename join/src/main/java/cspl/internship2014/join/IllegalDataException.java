@@ -1,7 +1,7 @@
 package cspl.internship2014.join;
 
 /**
- * Thrown to indicate illegal input data.
+ * Thrown to signalize illegal input data.
  */
 class IllegalDataException extends Exception {
     public IllegalDataException(String message) {

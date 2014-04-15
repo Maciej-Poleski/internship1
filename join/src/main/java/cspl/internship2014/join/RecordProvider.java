@@ -2,15 +2,17 @@ package cspl.internship2014.join;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+import java.io.Closeable;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Wraps all functionality needed to read records from stream (as many times as necessary).
  */
-class RecordProvider {
-    private CSVReader csvReader;
+class RecordProvider implements Closeable {
     private final InputStreamReaderMaker csvInputStreamReaderMaker;
     private final String[] header;
+    private CSVReader csvReader;
 
     /**
      * Initializes object with given stream maker.
@@ -29,7 +31,7 @@ class RecordProvider {
      * @return Header row of this CSV stream.
      */
     String[] getHeader() {
-        return header;
+        return Arrays.copyOf(header, header.length);
     }
 
     /**
@@ -56,5 +58,10 @@ class RecordProvider {
         this.csvReader.close();
         this.csvReader = new CSVReader(csvInputStreamReaderMaker.getInputStreamReader());
         csvReader.readNext();
+    }
+
+    @Override
+    public void close() throws IOException {
+        csvReader.close();
     }
 }

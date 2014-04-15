@@ -1,0 +1,6 @@
+id,col1,col2,col3,col4
+1,asd,42,2asd2,4222
+,asdnull,96null,45,zxc
+2,asd2,222,null,null
+1,,96,2asd2,4222
+,asdnull,96null,asd2null,496null

@@ -1,0 +1,5 @@
+id,col1,col2
+1,"asd",42
+1,"",96
+2,"asd2",222
+,"asdnull",96null

@@ -2,17 +2,15 @@ package cspl.internship2014.join;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Providers records from CSV in chunks.
  */
-class ChunkProvider {
+class ChunkProvider implements Closeable {
     private final String[] header;
     private final CSVReader csvReader;
 
@@ -31,7 +29,7 @@ class ChunkProvider {
      * @return Header row of this CSV stream.
      */
     String[] getHeader() {
-        return header;
+        return Arrays.copyOf(header, header.length);
     }
 
     /**
@@ -68,5 +66,15 @@ class ChunkProvider {
             }
         }
         return result;
+    }
+
+    /**
+     * Close underlying CSV reader.
+     *
+     * @throws IOException If there is serious problem with input stream.
+     */
+    @Override
+    public void close() throws IOException {
+        csvReader.close();
     }
 }

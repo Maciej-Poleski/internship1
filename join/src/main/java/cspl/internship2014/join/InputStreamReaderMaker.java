@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 
 /**
  * Class can implement this interface to provide method to obtain fresh {@link InputStreamReader} for some file or
- * resource.
+ * resource. It is used to enable reading file input more than once.
  */
 interface InputStreamReaderMaker {
 

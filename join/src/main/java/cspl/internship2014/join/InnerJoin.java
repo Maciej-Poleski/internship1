@@ -25,11 +25,12 @@ class InnerJoin extends JoinBase {
             leftCsv = rightCsv;
             rightCsv = t;
         }
-
+        RecordProvider recordProvider = null;
+        ChunkProvider chunkProvider = null;
         try {
             // left chunked
-            final RecordProvider recordProvider = new RecordProvider(rightCsv);
-            final ChunkProvider chunkProvider = new ChunkProvider(leftCsv.getInputStreamReader());
+            recordProvider = new RecordProvider(rightCsv);
+            chunkProvider = new ChunkProvider(leftCsv.getInputStreamReader());
             final int leftKey = Arrays.asList(chunkProvider.getHeader()).indexOf(joinKey);
             final int rightKey = Arrays.asList(recordProvider.getHeader()).indexOf(joinKey);
             if (leftKey == -1 || rightKey == -1) {
@@ -56,6 +57,12 @@ class InnerJoin extends JoinBase {
         } catch (IOException e) {
             throw new IllegalDataException(e.getMessage(), e);
         } finally {
+            if (recordProvider != null) {
+                recordProvider.close();
+            }
+            if (chunkProvider != null) {
+                chunkProvider.close();
+            }
             csvWriter.close();
         }
     }

@@ -7,8 +7,18 @@ import java.io.OutputStreamWriter;
  * All join implementations share this base class and functionality.
  */
 abstract class JoinBase {
+    /**
+     * Used as limit of chunk size. (Because of implicit memory constraints)
+     */
     static final long MAX_SIZE_HINT = 16 * 1024 * 1024;
 
+    /**
+     * Provides standard {@link RecordGenerator} implementation (removes column at index {@code rightKey} and
+     * "concatenates" rest as is.
+     *
+     * @param rightKey Column index at "right" side which will be removed from results.
+     * @return {@link RecordGenerator} implementation.
+     */
     protected static RecordGenerator getRecordGenerator(final int rightKey) {
         return new RecordGenerator() {
             @Override
@@ -22,6 +32,12 @@ abstract class JoinBase {
         };
     }
 
+    /**
+     * Provides "reversed" {@link RecordGenerator} implementation (swaps left and right sides).
+     *
+     * @param leftKey Column index at "left" side which will be removed from results.
+     * @return {@link RecordGenerator} implementation.
+     */
     protected static RecordGenerator getRecordGeneratorReversed(final int leftKey) {
         return new RecordGenerator() {
             private final RecordGenerator impl = getRecordGenerator(leftKey);
@@ -61,6 +77,13 @@ abstract class JoinBase {
      * interface is used to provide implementation of this functionality appropriate for given join operation.
      */
     protected interface RecordGenerator {
+        /**
+         * Generates result record from parts.
+         *
+         * @param leftRecord  Left record
+         * @param rightRecord Right record
+         * @return Result record built using given records.
+         */
         String[] generate(String[] leftRecord, String[] rightRecord);
     }
 }

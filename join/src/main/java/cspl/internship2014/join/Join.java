@@ -81,10 +81,10 @@ public class Join {
         if (joinType == null || "inner".equalsIgnoreCase(joinType))
             return new InnerJoin();
         else if ("left".equalsIgnoreCase(joinType))
-            return new LeftJoin();
+            return new LeftOuterJoin();
         else if ("right".equalsIgnoreCase(joinType))
-            return new RightJoin();
+            return new RightOuterJoin();
         else
-            throw new IllegalApplicationArgumentException("Unsupported joint type: " + joinType);
+            throw new IllegalApplicationArgumentException("Unsupported join type: " + joinType);
     }
 }
