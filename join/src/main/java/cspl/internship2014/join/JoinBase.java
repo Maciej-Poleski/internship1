@@ -60,6 +60,7 @@ abstract class JoinBase {
      * @throws IllegalApplicationArgumentException
      *                              If some argument is illegal (key is not column name in both CSV streams).
      * @throws IllegalDataException If input data (CSV stream) is not correct.
+     * @throws IOException          If there is serious problem with closing output stream.
      */
     abstract void join(InputStreamReaderMaker leftCsv, InputStreamReaderMaker rightCsv, String joinKey, OutputStreamWriter outputCsv, SizeHint sizeHint)
             throws IllegalApplicationArgumentException, IllegalDataException, IOException;

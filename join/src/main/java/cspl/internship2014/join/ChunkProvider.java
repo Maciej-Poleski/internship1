@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 /**
- * Providers records from CSV in chunks.
+ * Provides records from CSV in chunks.
  */
 class ChunkProvider implements Closeable {
     private final String[] header;
@@ -34,7 +34,7 @@ class ChunkProvider implements Closeable {
 
     /**
      * Prepares map with chunk of data from join key to list of rows (tuples). {@code maxSizeHint} will be used as hint
-     * for chunk size (total length of strings in collected rows should be approximately {@code maxSizeHint}). As a keys
+     * for chunk size (total length of strings in collected rows should be approximately {@code maxSizeHint}). As keys
      * will be used strings from column {@code column}.
      *
      * @param maxSizeHint Size hint. Total length of collected rows should be approximated by this number.
