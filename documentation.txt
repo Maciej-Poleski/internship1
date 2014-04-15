@@ -1,16 +1,16 @@
-IMPLEMENTATION
+ï»¿IMPLEMENTATION
 ==============
-Algorithm is so-called „block nested loop” with Hashtable as memory structure for holding loaded tuples (block). Description is here:
+Algorithm is so-called â€œblock nested loopâ€ with Hashtable as memory structure for holding loaded tuples (block). Description is here:
 http://en.wikipedia.org/wiki/Hash_join#Classic_hash_join
 http://en.wikipedia.org/wiki/Block_nested_loop
 Implementation supports three types of join: [inner, left outer, right outer]
 More can be added as a subclass o JoinBase class (cspl.internship2014.join.JoinBase) (you can look at this as some kind of Strategy design pattern).
-CSV files are pure textual. Standard format describes way of storing strings in tables. We don't have any type ascription. As a result all data contained in files are considered textual and have assigned String type. Note that >>,,<< and >>,””,<< are considered empty string and >>,null,<< and >>,”null”,<< are considered string with value >>null<<.
+CSV files are pure textual. Standard format describes way of storing strings in tables. We don't have any type ascription. As a result all data contained in files are considered textual and have assigned String type. Note that >>,,<< and >>,"",<< are considered empty string and >>,null,<< and >>,"null",<< are considered string with value >>null<<.
 Implementation comes with two helper classes: ChunkProvier and RecordProvider.
-Chunk provider reads a bunch of records (tuples) from CSV data source and constructs HashMap with join attribute as key and row as value. Memory resources are limited – so is chunk size. I didn't find a way to cleanly measure available memory space and predict memory utility resulting from inserting next row. I count characters inserted as values into HashMap and provide global “hint” (JoinBase.MAX_SIZE_HINT) - number which _should_ be safe on most platforms. Use of this hint is “opt-in” - you may choose to use different constraint.
-RecordProvider reads and returns records from CSV data source one by one. As big files cannot be read into memory at once implementation may divide one of relations into more than one “chunk”. As a result it may be necessary to read second relation more than once (responsibility of RecordProvider instance is to take care of this).
-Task of joining two tuples into one is performed by implementations of RecordGenerator interface (we have one SideJoin implementation which is used for both left and right join – we need a way to decide which side is “outer” and which is “inner”).
-Correctness of input data is checked lazily (during processing – no extra checking pass) and reported to standard error stream (STDERR).
+Chunk provider reads a bunch of records (tuples) from CSV data source and constructs HashMap with join attribute as key and row as value. Memory resources are limited â€“ so is chunk size. I didn't find a way to cleanly measure available memory space and predict memory utility resulting from inserting next row. I count characters inserted as values into HashMap and provide global â€œhintâ€ (JoinBase.MAX_SIZE_HINT) - number which _should_ be safe on most platforms. Use of this hint is â€œopt-inâ€ - you may choose to use different constraint.
+RecordProvider reads and returns records from CSV data source one by one. As big files cannot be read into memory at once implementation may divide one of relations into more than one â€œchunkâ€. As a result it may be necessary to read second relation more than once (responsibility of RecordProvider instance is to take care of this).
+Task of joining two tuples into one is performed by implementations of RecordGenerator interface (we have one SideJoin implementation which is used for both left and right join â€“ we need a way to decide which side is â€œouterâ€ and which is â€œinnerâ€).
+Correctness of input data is checked lazily (during processing â€“ no extra checking pass) and reported to standard error stream (STDERR).
 Parsing of CSV structure is performed by OpenCSV library.
 
 TESTING
@@ -19,7 +19,7 @@ Unit testing:
  - Small hand-crafted input data and output (+ functions to compare them ignoring row ordering and possible multiple representations of the same data).
  - Small hand-crafted broken input data (implementation is expected to throw appropriate exception).
 
-“Integration” testing:
- - Application is tested “by hand” on two platforms: Windows 8 (x64) (Oracle JDK 1.7 x64) and OpenSuSE 13.1 (x64) (OpenJDK 1.7 x64).
+â€œIntegrationâ€ testing:
+ - Application is tested â€œby handâ€ on two platforms: Windows 8 (x64) (Oracle JDK 1.7 x64) and OpenSuSE 13.1 (x64) (OpenJDK 1.7 x64).
  - Application can be run using input provided for unit testing.
  - There is simple test generator used to generate possibly big tables (test1.cxx). Application was run on two files both of size 2.5GB.
